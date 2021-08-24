@@ -10,11 +10,13 @@ const portfolioSchema = new mongoose.Schema({
   buyPrice: {
     type: Number,
     max: 100000,
+    min: 0,
     // required: true,
   },
   amount: {
     type: Number,
     max: 100000,
+    min: 1,
     // required: true,
   },
 })
@@ -44,24 +46,7 @@ const userSchema = new mongoose.Schema({
     max: 255,
     required: true,
   },
-  portfolio: [
-    {
-      name: {
-        type: String,
-        required: true,
-      },
-      buyPrice: {
-        type: Number,
-        max: 100000,
-        required: true,
-      },
-      amount: {
-        type: Number,
-        max: 100000,
-        required: true,
-      },
-    },
-  ],
+  portfolio: [portfolioSchema],
 })
 
 userSchema.methods.generateAuthToken = function () {

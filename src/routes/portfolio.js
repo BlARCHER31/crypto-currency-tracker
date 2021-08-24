@@ -18,15 +18,32 @@ router.put('/', auth, async (req, res) => {
   }
 
   try {
-    await User.updateOne(user, {
-      $push: {
-        portfolio: newCrypto,
+    await User.updateOne(
+      user,
+      {
+        $push: {
+          portfolio: newCrypto,
+        },
       },
-    })
-    console.log(newCrypto)
+      { new: true }
+    )
     res.send(user)
   } catch (err) {
     console.log(err.message)
   }
 })
+
+router.delete('/', auth, async (req, res) => {
+  let user = await User.findOne({ username: req.body.username })
+  if (!user) return res.status(404).send('User not found')
+
+  let portfolioObject = await user.portfolio.id(req.body._id)
+  if (!portfolioObject)
+    return res.status(404).send('Nothing found in the portfolio with that ID.')
+
+  await user.portfolio.id(req.body._id).remove()
+  await user.save()
+  res.send(user)
+})
+
 module.exports = router
