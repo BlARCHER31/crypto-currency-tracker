@@ -10,6 +10,7 @@ router.get('/', auth, async (req, res) => {
 
 router.put('/', auth, async (req, res) => {
   let user = await User.findById(req.body._id)
+  if(!user) return res.status(404).send('User not found')
 
   const newCrypto = {
     name: req.body.name,
