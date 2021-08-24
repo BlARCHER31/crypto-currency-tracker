@@ -5,19 +5,19 @@ import jwt from 'jsonwebtoken'
 const portfolioSchema = new mongoose.Schema({
   name: {
     type: String,
-    // required: true,
+    required: true,
   },
   buyPrice: {
     type: Number,
     max: 100000,
     min: 0,
-    // required: true,
+    required: true,
   },
   amount: {
     type: Number,
     max: 100000,
     min: 1,
-    // required: true,
+    required: true,
   },
 })
 

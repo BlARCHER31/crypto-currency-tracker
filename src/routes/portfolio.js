@@ -10,7 +10,7 @@ router.get('/', auth, async (req, res) => {
 
 router.put('/', auth, async (req, res) => {
   let user = await User.findById(req.body._id)
-  if(!user) return res.status(404).send('User not found')
+  if (!user) return res.status(404).send('User not found')
 
   const newCrypto = {
     name: req.body.name,
@@ -19,18 +19,11 @@ router.put('/', auth, async (req, res) => {
   }
 
   try {
-    await User.updateOne(
-      user,
-      {
-        $push: {
-          portfolio: newCrypto,
-        },
-      },
-      { new: true }
-    )
+    user.portfolio.push(newCrypto)
+    await user.save()
     res.send(user)
   } catch (err) {
-    console.log(err.message)
+    res.send(err.message)
   }
 })
 
