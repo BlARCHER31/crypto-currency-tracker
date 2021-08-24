@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 import _ from 'lodash'
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 const { User, validate } = require('../models/users')
 
 
