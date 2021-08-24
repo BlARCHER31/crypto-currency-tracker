@@ -20,12 +20,10 @@ router.put('/', auth, async (req, res) => {
   try {
     await User.updateOne(user, {
       $push: {
-        portfolio: {
-          newCrypto,
-        },
+        portfolio: newCrypto,
       },
     })
-
+    console.log(newCrypto)
     res.send(user)
   } catch (err) {
     console.log(err.message)

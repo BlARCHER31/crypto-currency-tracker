@@ -44,7 +44,24 @@ const userSchema = new mongoose.Schema({
     max: 255,
     required: true,
   },
-  portfolio: [Object],
+  portfolio: [
+    {
+      name: {
+        type: String,
+        required: true,
+      },
+      buyPrice: {
+        type: Number,
+        max: 100000,
+        required: true,
+      },
+      amount: {
+        type: Number,
+        max: 100000,
+        required: true,
+      },
+    },
+  ],
 })
 
 userSchema.methods.generateAuthToken = function () {
