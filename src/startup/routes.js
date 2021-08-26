@@ -3,9 +3,11 @@ import coinbase from '../routes/coinbaseRoutes'
 import users from '../routes/users'
 import auth from '../routes/auth'
 import portfolio from '../routes/portfolio'
+import cors from 'cors'
 
 module.exports = function (app) {
   app.use(express.json())
+  app.use(cors())
 
   app.use('/api/coinbase', coinbase)
   app.use('/api/users', users)
