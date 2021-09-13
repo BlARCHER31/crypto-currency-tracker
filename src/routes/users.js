@@ -4,7 +4,6 @@ import _ from 'lodash'
 import bcrypt from 'bcrypt'
 const { User, validate } = require('../models/users')
 
-
 router.post('/register', async (req, res) => {
   const { error } = validate(req.body)
   if (error) return res.status(400).send(error.details[0].message)
@@ -26,7 +25,8 @@ router.post('/register', async (req, res) => {
 
     const token = user.generateAuthToken()
     res
-      .header('x-auth.token', token)
+      .header('x-auth-token', token)
+      .header('access-control-expose-headers', 'x-auth-token')
       .send(_.pick(user, ['_id', 'username', 'email']))
   } catch (err) {
     console.log(err)
