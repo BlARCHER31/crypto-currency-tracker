@@ -5,16 +5,19 @@ import jwt from 'jsonwebtoken'
 const portfolioSchema = new mongoose.Schema({
   name: {
     type: String,
+    required: true,
   },
   buyPrice: {
     type: Number,
     max: 100000,
     min: 0,
+    required: true,
   },
   amount: {
     type: Number,
     max: 100000,
     min: 1,
+    required: true,
   },
 })
 
@@ -34,7 +37,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     min: 1,
-    max: 25,
+    max: 50,
     required: true,
   },
   password: {
@@ -47,7 +50,10 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.methods.generateAuthToken = function () {
-  const token = jwt.sign({ _id: this._id }, process.env.ACCESS_TOKEN_SECRET)
+  const token = jwt.sign(
+    { _id: this._id, username: this.username, name: this.name },
+    process.env.ACCESS_TOKEN_SECRET
+  )
   return token
 }
 
@@ -57,7 +63,7 @@ function validateUser(user) {
   const schema = Joi.object({
     name: Joi.string().min(1).max(20).required(),
     username: Joi.string().min(5).max(20).required(),
-    email: Joi.string().min(1).max(20).required().email(),
+    email: Joi.string().min(1).max(50).required().email(),
     password: Joi.string().min(6).max(255).required(),
   })
 
