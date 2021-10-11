@@ -1,7 +1,7 @@
 import express from 'express'
-import coinbaseApiClient from '../services/coinbaseApiClient'
+import upholdApiClient from '../services/upholdApiClient'
 
-const coinbase = function getCoinbaseRoutes() {
+const uphold = function getUpholdRoutes() {
   const router = express.Router()
   router.get('/:coin', handleGetCoinSpotPrice)
   return router
@@ -10,7 +10,7 @@ const coinbase = function getCoinbaseRoutes() {
 async function handleGetCoinSpotPrice(req, res) {
   const coin = req.params.coin + '-USD'
   try {
-    const currencyWorth = await coinbaseApiClient.fetchCryptoCurrentWorth(coin)
+    const currencyWorth = await upholdApiClient.fetchCryptoCurrentWorth(coin)
     res.send(currencyWorth)
   } catch (e) {
     return res
@@ -19,4 +19,4 @@ async function handleGetCoinSpotPrice(req, res) {
   }
 }
 
-module.exports = coinbase()
+module.exports = uphold()
