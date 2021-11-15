@@ -9,19 +9,36 @@ router.get('/', auth, async (req, res) => {
 })
 
 router.put('/', auth, async (req, res) => {
-  let user = await User.findById(req.body._id)
+  const { _id, cryptoName: name, buyPrice, amount } = req.body
+
+  let user = await User.findById(_id)
   if (!user) return res.status(404).send('User not found')
 
   const newCrypto = {
-    name: req.body.name,
-    buyPrice: req.body.buyPrice,
-    amount: req.body.amount,
+    cryptoName: name,
+    purchaseDetails: { buyPrice: buyPrice, amount: amount },
   }
 
   try {
-    user.portfolio.push(newCrypto)
-    await user.save()
-    res.send(user)
+    let cryptoAlreadyThere = await User.findOne({
+      'portfolio.cryptoName': name,
+    })
+    if (!cryptoAlreadyThere) {
+      user.portfolio.push(newCrypto)
+      await user.save()
+      res.send(user)
+    } else {
+      let subdoc = user.portfolio
+      subdoc.forEach(obj => {
+        if (obj.cryptoName === name) {
+          obj.purchaseDetails.push({ buyPrice, amount })
+        }
+        return
+      })
+
+      await user.save()
+      res.send(user)
+    }
   } catch (err) {
     res.send(err.message)
   }

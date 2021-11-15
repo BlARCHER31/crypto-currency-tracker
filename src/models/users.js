@@ -2,10 +2,11 @@ const mongoose = require('mongoose')
 const Joi = require('joi')
 import jwt from 'jsonwebtoken'
 
-const portfolioSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
+const purchaseSchema = new mongoose.Schema({
+  amount: {
+    type: Number,
+    min: 0,
+    max: 10000000,
   },
   buyPrice: {
     type: Number,
@@ -13,12 +14,13 @@ const portfolioSchema = new mongoose.Schema({
     min: 0,
     required: true,
   },
-  amount: {
-    type: Number,
-    max: 100000,
-    min: 1,
+})
+const portfolioSchema = new mongoose.Schema({
+  cryptoName: {
+    type: String,
     required: true,
   },
+  purchaseDetails: [purchaseSchema],
 })
 
 const userSchema = new mongoose.Schema({
