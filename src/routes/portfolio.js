@@ -16,7 +16,8 @@ router.put('/', auth, async (req, res) => {
 
   const newCrypto = {
     cryptoName: name,
-    purchaseDetails: { buyPrice: buyPrice, amount: amount },
+    amount: amount,
+    buyPrices: [buyPrice],
   }
 
   try {
@@ -31,14 +32,14 @@ router.put('/', auth, async (req, res) => {
       let subdoc = user.portfolio
       subdoc.forEach(obj => {
         if (obj.cryptoName === name) {
-          obj.purchaseDetails.push({ buyPrice, amount })
+          obj.amount +=  parseInt(amount)
+          obj.buyPrices.push(buyPrice)
         }
         return
       })
-
-      await user.save()
-      res.send(user)
     }
+    await user.save()
+    res.send(user)
   } catch (err) {
     res.send(err.message)
   }
