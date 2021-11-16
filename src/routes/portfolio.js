@@ -3,8 +3,8 @@ const router = express.Router()
 const { User } = require('../models/users')
 import auth from '../middleware/auth'
 
-router.get('/', auth, async (req, res) => {
-  let user = await User.findById(req.params.username)
+router.get('/:_id', auth, async (req, res) => {
+  let user = await User.findById(req.params._id)
   res.send(user.portfolio)
 })
 
