@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { User } = require('../models/users')
 import auth from '../middleware/auth'
+import { calculateAverageBuyPrice } from './../services/averageBuyPrice'
 
 router.get('/:_id', auth, async (req, res) => {
   let user = await User.findById(req.params._id)
@@ -18,6 +19,7 @@ router.put('/', auth, async (req, res) => {
     cryptoName: name,
     amount: amount,
     buyPrices: [buyPrice],
+    averageBuyPrice: buyPrice,
   }
 
   try {
@@ -32,8 +34,9 @@ router.put('/', auth, async (req, res) => {
       let subdoc = user.portfolio
       subdoc.forEach(obj => {
         if (obj.cryptoName === name) {
-          obj.amount +=  parseInt(amount)
+          obj.amount += parseInt(amount)
           obj.buyPrices.push(buyPrice)
+          obj.averageBuyPrice = calculateAverageBuyPrice(obj.buyPrices)
         }
         return
       })
