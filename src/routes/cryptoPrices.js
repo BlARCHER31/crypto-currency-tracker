@@ -1,5 +1,6 @@
 import express from 'express'
 import coinbaseApiClient from '../services/coinbaseApiClient'
+import upholdApiClient from '../services/upholdApiClient'
 
 const coinbase = function getCoinbaseRoutes() {
   const router = express.Router()
@@ -9,13 +10,21 @@ const coinbase = function getCoinbaseRoutes() {
 
 async function handleGetCoinSpotPrice(req, res) {
   const coin = req.params.coin + '-USD'
+  let currencyWorth
   try {
-    const currencyWorth = await coinbaseApiClient.fetchCryptoCurrentWorth(coin)
+    currencyWorth = await coinbaseApiClient.fetchCryptoCurrentWorth(coin)
+    if (!currencyWorth) {
+      currencyWorth = await upholdApiClient.fetchCryptoCurrentWorth(coin)
+    }
     res.send(currencyWorth)
   } catch (e) {
-    return res
+    res
       .status(404)
-      .send(`Unable to fetch the crypto currency ${coin}: ${e.message}`)
+      .send(
+        `Could not find ${coin.toUpperCase()} on Coinbase or Uphold. ${
+          e.message
+        }`
+      )
   }
 }
 

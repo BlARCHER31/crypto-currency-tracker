@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { User } = require('../models/users')
 import auth from '../middleware/auth'
-import { calculateAverageBuyPrice } from './../services/averageBuyPrice'
+import { calculateAverageBuyPrice } from './../util/averageBuyPrice'
 
 router.get('/:_id', auth, async (req, res) => {
   let user = await User.findById(req.params._id)
@@ -29,7 +29,6 @@ router.put('/', auth, async (req, res) => {
     if (!cryptoAlreadyThere) {
       user.portfolio.push(newCrypto)
       await user.save()
-      res.send(user)
     } else {
       let subdoc = user.portfolio
       subdoc.forEach(obj => {

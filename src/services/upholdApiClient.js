@@ -13,8 +13,9 @@ class UpholdApiClient {
       })
       return response.data
     } catch (error) {
-      res.send(error.message).status(404)
-      logger.error('Unable to find that crypto ' + error.message)
+      logger.error(
+        `Unable to find ${currencyPair} crypto on UpHold. ` + error.message
+      )
     }
   }
 }
