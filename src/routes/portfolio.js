@@ -24,11 +24,14 @@ router.put('/', auth, async (req, res) => {
 
   try {
     let cryptoAlreadyThere = await User.findOne({
+      _id: _id,
       'portfolio.cryptoName': name,
     })
+
     if (!cryptoAlreadyThere) {
       user.portfolio.push(newCrypto)
       await user.save()
+      return res.send(user)
     } else {
       let subdoc = user.portfolio
       subdoc.forEach(obj => {
