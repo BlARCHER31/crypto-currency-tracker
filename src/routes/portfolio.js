@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const { User } = require('../models/users')
 import auth from '../middleware/auth'
-import { calculateAverageBuyPrice } from './../util/averageBuyPrice'
 
 router.get('/:_id', auth, async (req, res) => {
   let user = await User.findById(req.params._id)
@@ -10,7 +9,7 @@ router.get('/:_id', auth, async (req, res) => {
 })
 
 router.put('/', auth, async (req, res) => {
-  const { _id, cryptoName: name, buyPrice, amount } = req.body
+  const { _id, cryptoName: name, amount } = req.body
 
   let user = await User.findById(_id)
   if (!user) return res.status(404).send('User not found')
@@ -18,8 +17,6 @@ router.put('/', auth, async (req, res) => {
   const newCrypto = {
     cryptoName: name,
     amount: amount,
-    buyPrices: [buyPrice],
-    averageBuyPrice: buyPrice,
   }
 
   try {
@@ -31,14 +28,11 @@ router.put('/', auth, async (req, res) => {
     if (!cryptoAlreadyThere) {
       user.portfolio.push(newCrypto)
       await user.save()
-      return res.send(user)
     } else {
       let subdoc = user.portfolio
       subdoc.forEach(obj => {
         if (obj.cryptoName === name) {
           obj.amount += parseInt(amount)
-          obj.buyPrices.push(buyPrice)
-          obj.averageBuyPrice = calculateAverageBuyPrice(obj.buyPrices)
         }
         return
       })
@@ -50,15 +44,31 @@ router.put('/', auth, async (req, res) => {
   }
 })
 
-router.delete('/', auth, async (req, res) => {
-  let user = await User.findOne({ username: req.body.username })
+router.put('/update-amount', auth, async (req, res) => {
+  const { username, amount, cryptoId } = req.body
+
+  let user = await User.findOne({ username })
   if (!user) return res.status(404).send('User not found')
 
-  let portfolioObject = await user.portfolio.id(req.body._id)
+  try {
+    let cryptoToUpdate = user.portfolio.id(cryptoId)
+    cryptoToUpdate.amount = cryptoToUpdate.amount - amount
+    await user.save()
+    res.send(cryptoToUpdate)
+  } catch (err) {
+    res.status(400).send(err.message)
+  }
+})
+
+router.delete('/:user/:_id', auth, async (req, res) => {
+  let user = await User.findOne({ username: req.params.user })
+  if (!user) return res.status(404).send('User not found')
+
+  let portfolioObject = await user.portfolio.id(req.params._id)
   if (!portfolioObject)
     return res.status(404).send('Nothing found in the portfolio with that ID.')
 
-  await user.portfolio.id(req.body._id).remove()
+  await user.portfolio.id(req.params ._id).remove()
   await user.save()
   res.send(user)
 })

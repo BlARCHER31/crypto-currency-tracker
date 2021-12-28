@@ -13,12 +13,6 @@ const portfolioSchema = new mongoose.Schema({
     max: 1000000000,
     required: true,
   },
-  averageBuyPrice: {
-    type: Number,
-    min: 0,
-    max: 10000000,
-  },
-  buyPrices: [Number],
 })
 
 const userSchema = new mongoose.Schema({
