@@ -5,6 +5,7 @@ require('dotenv').config()
 
 require('./startup/db')()
 require('./startup/routes')(app)
+require('./startup/prod')(app)
 
 if (!process.env.ACCESS_TOKEN_SECRET) {
   console.error('FATAL ERROR: secret token not defined')
