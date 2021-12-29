@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const config = require('config')
 
-module.exports = async function () {
+module.exports = function () {
   // const db = process.env.DB_INFO
   const db = config.get('app.db')
   mongoose

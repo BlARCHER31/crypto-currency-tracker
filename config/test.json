@@ -3,7 +3,7 @@
     "server": {
       "port": 8080
     },
-    "db": "mongodb+srv://archer3127:QVJQPLRdexbONhTX@cluster0.nuzs9.mongodb.net/crypto-currency-info_tests?retryWrites=true&w=majority"
+    "db": ""
   },
   "coinbase": {
     "spotBaseURL": "https://api.coinbase.com/v2/prices/"
