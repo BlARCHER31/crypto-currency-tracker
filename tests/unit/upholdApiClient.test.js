@@ -1,5 +1,5 @@
 import mockAxios from 'axios'
-import upholdApiClient from '../src/services/upholdApiClient'
+import upholdApiClient from '../../src/services/upholdApiClient'
 jest.mock('axios')
 
 describe('upholdApiClient', () => {

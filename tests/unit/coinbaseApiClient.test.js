@@ -1,5 +1,5 @@
 import mockAxios from 'axios'
-import coinbaseApiClient from '../src/services/coinbaseApiClient'
+import coinbaseApiClient from '../../src/services/coinbaseApiClient'
 jest.mock('axios')
 
 describe('coinbaseApiClient', () => {
