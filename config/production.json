@@ -1,0 +1,13 @@
+{
+    "app": {
+        "server": {
+            "port": "8080"
+        }
+    },
+    "coinbase": {
+        "spotBaseURL": "https://api.coinbase.com/v2/prices/"
+    },
+    "uphold": {
+        "spotBaseURL": "https://api.uphold.com/v0/ticker/"
+    }
+}

@@ -7,8 +7,9 @@
     "node": "12.18.2"
   },
   "scripts": {
-    "test": "jest --coverage --verbose --testEnvironment=node --maxWorkers=1 --detectOpenHandles",
-    "start": "node ."
+    "test": "jest --coverage --verbose --testEnvironment=node --maxWorkers=1 --detectOpenHandles --watch",
+    "start": "node .",
+    "build": "babel --delete-dir-on-start --out-dir dist --copy-files --ignore \"**/__tests__/**,**/__mocks__/**\" --no-copy-ignored src"
   },
   "author": "Blake Archer",
   "license": "ISC",
@@ -27,6 +28,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "loglevel": "^1.7.1",
+    "mongoose": "^6.1.6",
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.1.6"
   },
