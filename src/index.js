@@ -16,12 +16,4 @@ const server = app.listen(port, () => {
   console.log(`Listening on ${port}...`)
 })
 
-let element = document.getElementById('root')
-function showDate(date) {
-  return (element = date)
-}
-
-const date = Date()
-showDate(date)
-
 module.exports = server
