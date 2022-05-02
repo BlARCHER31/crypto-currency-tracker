@@ -2,11 +2,13 @@
 
 ## Coinbase ![Coinbase Logo](src/images/readme/coinbase-logo.png) </br>
 
-Coinbase is an app that lets you buy and sell all sorts of cryptocurrencies, like Bitcoin, Ethereum, Litecoin and about 50 others. You can also use Coinbase to convert one cryptocurrency to another, or to send and receive cryptocurrency to and from other people.</br>
+Coinbase is an app that lets you buy and sell all sorts of cryptocurrencies, like Bitcoin, Ethereum, Litecoin and much more. You can also use Coinbase to convert one cryptocurrency to another, or to send and receive cryptocurrency to and from other people.</br>
 
-Coinbase also offers a great developer portal for software engineers to develop apps based off of their platform.
-For this project I have implemented the price endpoint offered by Coinbase to find out specific cryptocurrency
-prices. </br>
+## Uphold ![Uphold Logo](src/images/readme/uphold.png) </br>
+
+Uphold is another app that lets you buy, sell and trade cryptocurrencies. Uphold offers some of the same, but also different cryptos than Coinbase.</br>
+
+Both Uphold and Coinbase offer a great developer portal for software engineers to develop apps based off of their respective platforms. For this project I have implemented the price endpoints offered by Coinbase and Uphold to find out specific cryptocurrency prices. </br>
 
 ## Purpose of the Project </br>
 
@@ -47,4 +49,3 @@ The biggest thing that I took away from this project was the relationship of the
 
 - ![Axios logo](src/images/readme/axios-logo.png) [Axios](https://www.npmjs.com/package/axios)
   <br/>
-
